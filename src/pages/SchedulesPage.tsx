@@ -9,12 +9,12 @@ export default function SchedulesPage() {
   return (
     <Suspense
       fallback={
-        <div className="relative mx-auto flex min-h-[calc(100dvh-9.5rem)] w-full max-w-6xl items-center justify-center px-8">
+        <div className="relative flex min-h-[calc(100dvh-9.5rem)] w-full items-center justify-center">
           <LoadingBlock message="Loading schedules…" size="md" />
         </div>
       }
     >
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="w-full">
         <SchedulesBoard />
       </div>
     </Suspense>

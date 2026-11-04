@@ -19,7 +19,7 @@ export function DocumentTypeGate({
 
   if (!isTestConnectionSearch(searchParams) && !isDocumentTypeAllowed(user, messageType)) {
     return (
-      <div className="mx-auto max-w-3xl space-y-4 py-10">
+      <div className="w-full min-w-0 space-y-4 py-10">
         <UmercoAlert variant="error">
           {outboundDocumentLabel(messageType)} is not enabled for this supplier. Ask your partner administrator to add it
           under document types.

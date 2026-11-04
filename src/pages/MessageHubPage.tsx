@@ -159,7 +159,7 @@ export default function MessageHubPage() {
   };
 
   return (
-    <div className="mx-auto flex max-w-6xl flex-col gap-5">
+    <div className="flex w-full min-w-0 flex-col gap-5">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <UmercoSectionLabel>Integrations</UmercoSectionLabel>

@@ -225,7 +225,7 @@ export default function EditSupplierPage() {
 
   if (loading) {
     return (
-      <div className="relative mx-auto flex min-h-[calc(100dvh-9.5rem)] w-full max-w-7xl items-center justify-center">
+      <div className="relative flex min-h-[calc(100dvh-9.5rem)] w-full items-center justify-center">
         <LoadingBlock message={t("suppliers.loadingOne")} size="md" />
       </div>
     );
@@ -233,7 +233,7 @@ export default function EditSupplierPage() {
 
   if (error && !supplier) {
     return (
-      <div className="mx-auto max-w-7xl py-6">
+      <div className="w-full min-w-0 py-6">
         <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
           {error}
         </div>
@@ -248,7 +248,7 @@ export default function EditSupplierPage() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 py-2">
+    <div className="flex w-full min-w-0 flex-col gap-6 py-2">
       <nav className="text-sm text-umerco-muted" aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-2">
           <li>

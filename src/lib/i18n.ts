@@ -2,13 +2,25 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import en from "@/i18n/locales/en.json";
 import es from "@/i18n/locales/es.json";
+import fr from "@/i18n/locales/fr.json";
+import de from "@/i18n/locales/de.json";
 
-export type PortalLanguage = "en" | "es";
+export type PortalLanguage = "en" | "es" | "fr" | "de";
 
-const PORTAL_LANGUAGES: PortalLanguage[] = ["en", "es"];
+export const PORTAL_LANGUAGE_OPTIONS: { code: PortalLanguage; label: string; short: string }[] = [
+  { code: "en", label: "English", short: "EN" },
+  { code: "es", label: "Español", short: "ES" },
+  { code: "fr", label: "Français", short: "FR" },
+  { code: "de", label: "Deutsch", short: "DE" }
+];
+
+export const PORTAL_LANGUAGES: PortalLanguage[] = PORTAL_LANGUAGE_OPTIONS.map((option) => option.code);
+
+const PORTAL_LANGUAGE_SET = new Set<string>(PORTAL_LANGUAGES);
 
 export function normalizePortalLanguage(value: string | null | undefined): PortalLanguage {
-  if (value === "es") return "es";
+  const code = (value ?? "").split("-")[0].toLowerCase();
+  if (PORTAL_LANGUAGE_SET.has(code)) return code as PortalLanguage;
   return "en";
 }
 
@@ -35,8 +47,6 @@ export async function setPortalLanguage(lang: PortalLanguage): Promise<void> {
   await i18n.changeLanguage(lang);
 }
 
-export { PORTAL_LANGUAGES };
-
 const initialLanguage = getStoredLanguage();
 applyDocumentLanguage(initialLanguage);
 
@@ -44,7 +54,9 @@ if (!i18n.isInitialized) {
   i18n.use(initReactI18next).init({
     resources: {
       en: { translation: en },
-      es: { translation: es }
+      es: { translation: es },
+      fr: { translation: fr },
+      de: { translation: de }
     },
     lng: initialLanguage,
     fallbackLng: "en",

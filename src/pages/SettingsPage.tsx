@@ -468,14 +468,14 @@ export default function SettingsPage() {
 
   if (loading) {
     return (
-      <div className="relative mx-auto flex min-h-[calc(100dvh-9.5rem)] w-full max-w-6xl items-center justify-center">
+      <div className="relative flex min-h-[calc(100dvh-9.5rem)] w-full items-center justify-center">
         <LoadingBlock message="Loading settings…" size="md" />
       </div>
     );
   }
 
   return (
-    <div className="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-5 py-6">
+    <div className="flex w-full min-w-0 flex-col gap-5 py-6">
       <header>
         <UmercoSectionLabel>Settings</UmercoSectionLabel>
         <h2 className="mt-1 text-xl font-semibold text-umerco-dark">Account Settings</h2>

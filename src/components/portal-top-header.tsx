@@ -15,7 +15,12 @@ import { NotificationPopup } from "@/components/NotificationPopup";
 import { useMountedOpen } from "@/hooks/useMountedOpen";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useAuth } from "@/context/auth-context";
-import { setPortalLanguage, type PortalLanguage } from "@/lib/i18n";
+import {
+  normalizePortalLanguage,
+  PORTAL_LANGUAGE_OPTIONS,
+  setPortalLanguage,
+  type PortalLanguage
+} from "@/lib/i18n";
 import { paths } from "@/paths";
 
 const LOGO_LIGHT_SRC = "/logo/logo-light.svg";
@@ -48,8 +53,9 @@ export function PortalTopHeader({
   const langMounted = useMountedOpen(langOpen, 180);
   const profileMounted = useMountedOpen(profileOpen, 180);
 
-  const currentLang: PortalLanguage = i18n.language === "es" ? "es" : "en";
-  const langShort = currentLang === "es" ? "ES" : "EN";
+  const currentLang = normalizePortalLanguage(i18n.language);
+  const langShort =
+    PORTAL_LANGUAGE_OPTIONS.find((lang) => lang.code === currentLang)?.short ?? "EN";
 
   const companyName = authUser?.business_partner_name?.trim() || t("login.subtitle");
   const roleLabel =
@@ -153,24 +159,20 @@ export function PortalTopHeader({
                 }`}
                 role="listbox"
               >
-                <button
-                  type="button"
-                  role="option"
-                  aria-selected={currentLang === "en"}
-                  className={`portal-top-dropdown-item w-full ${currentLang === "en" ? "portal-top-dropdown-item-active" : ""}`}
-                  onClick={() => onLanguageChange("en")}
-                >
-                  English
-                </button>
-                <button
-                  type="button"
-                  role="option"
-                  aria-selected={currentLang === "es"}
-                  className={`portal-top-dropdown-item w-full ${currentLang === "es" ? "portal-top-dropdown-item-active" : ""}`}
-                  onClick={() => onLanguageChange("es")}
-                >
-                  Español
-                </button>
+                {PORTAL_LANGUAGE_OPTIONS.map(({ code, label }) => (
+                  <button
+                    key={code}
+                    type="button"
+                    role="option"
+                    aria-selected={currentLang === code}
+                    className={`portal-top-dropdown-item w-full ${
+                      currentLang === code ? "portal-top-dropdown-item-active" : ""
+                    }`}
+                    onClick={() => onLanguageChange(code)}
+                  >
+                    {label}
+                  </button>
+                ))}
               </div>
             ) : null}
           </div>

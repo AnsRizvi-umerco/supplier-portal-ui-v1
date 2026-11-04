@@ -67,7 +67,7 @@ export default function CompliancePage() {
   const certifiedCount = SCORECARD.filter((s) => s.status === "pass").length;
 
   return (
-    <div className="mx-auto flex max-w-6xl flex-col gap-5">
+    <div className="flex w-full min-w-0 flex-col gap-5">
       <div>
         <UmercoSectionLabel>Self-test environment</UmercoSectionLabel>
         <h2 className="text-2xl font-semibold text-umerco-dark">Compliance &amp; certification</h2>

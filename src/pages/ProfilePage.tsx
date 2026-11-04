@@ -147,7 +147,7 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="relative mx-auto flex min-h-[calc(100dvh-9.5rem)] w-full max-w-6xl items-center justify-center px-8">
+      <div className="relative flex min-h-[calc(100dvh-9.5rem)] w-full items-center justify-center">
         <LoadingBlock message={t("shell.loadingProfile")} size="md" />
       </div>
     );
@@ -155,7 +155,7 @@ export default function ProfilePage() {
 
   if (error || !profile) {
     return (
-      <div className="mx-auto w-full max-w-5xl py-6">
+      <div className="w-full min-w-0 py-6">
         <UmercoSectionLabel>Profile</UmercoSectionLabel>
         <h2 className="mt-1 mb-4 text-xl font-semibold text-umerco-dark">Profile</h2>
         <div className="rounded-md border border-umerco-border bg-umerco-beige px-4 py-3 text-sm text-umerco-dark">
@@ -168,7 +168,7 @@ export default function ProfilePage() {
   const role = roleLabel(profile.actor, t);
 
   return (
-    <div className="mx-auto flex w-full min-w-0 max-w-5xl flex-col gap-4 py-6">
+    <div className="flex w-full min-w-0 flex-col gap-4 py-6">
       <div>
         <UmercoSectionLabel>Profile</UmercoSectionLabel>
         <h2 className="mt-1 text-xl font-semibold text-umerco-dark">Profile</h2>

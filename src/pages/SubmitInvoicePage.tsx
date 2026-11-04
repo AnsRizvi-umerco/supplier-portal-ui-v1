@@ -350,7 +350,7 @@ export default function InvoicePage() {
 
   return (
     <DocumentTypeGate messageType="INVOIC">
-    <div className="mx-auto max-w-6xl space-y-5 py-6">
+    <div className="w-full min-w-0 space-y-5 py-6">
       {isTest ? (
         <UmercoAlert variant="info">
           Test connection — sample invoice payload. Submit sends to your channel URL.

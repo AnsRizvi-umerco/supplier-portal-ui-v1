@@ -387,7 +387,7 @@ export default function SubmitAsnPage() {
 
   return (
     <DocumentTypeGate messageType="DESADV">
-    <div className="mx-auto max-w-6xl space-y-6 py-6">
+    <div className="w-full min-w-0 space-y-6 py-6">
         {isTest ? (
           <UmercoAlert variant="info">
             Test connection — sample ASN payload. Submit sends to your channel URL.

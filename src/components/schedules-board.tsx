@@ -284,7 +284,8 @@ function formatSupplierLabel(schedule: {
 
 function formatPeriod(start: string, end: string) {
   const format = (value: string) => {
-    const normalized = formatInboundDate(value);
+    const dayMatch = value.match(/^(\d{4}-\d{2}-\d{2})/);
+    const normalized = dayMatch?.[1] ?? formatInboundDate(value);
     if (/^\d{4}-\d{2}-\d{2}$/.test(normalized)) {
       return new Date(`${normalized}T00:00:00`).toLocaleDateString(undefined, {
         month: "short",
@@ -893,7 +894,7 @@ export function SchedulesBoard() {
         </div>
       </Collapse>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="schedule-panel grid grid-cols-2 overflow-hidden sm:grid-cols-5">
         <StatCard label="Total" value={scheduleStats.total} />
         <StatCard label="Pending" value={scheduleStats.pending} tone="pending" />
         <StatCard label="Ack" value={scheduleStats.acknowledged} tone="acknowledged" />
@@ -923,7 +924,7 @@ export function SchedulesBoard() {
             </p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <Pagination
               page={page}
               pageSize={pageSize}
@@ -953,42 +954,45 @@ export function SchedulesBoard() {
               aria-expanded={expanded}
               aria-controls={detailPanelId}
               onClick={() => toggleSchedule(schedule.id)}
-              className="w-full px-5 py-4 text-left transition-colors hover:bg-umerco-canvas/30"
+              className="w-full px-5 py-3.5 text-left transition-colors hover:bg-umerco-canvas/30"
             >
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div className="flex min-w-0 flex-1 items-start gap-3.5">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-umerco-primary-soft text-umerco-primary">
-                    <CalendarClock className="h-5 w-5" strokeWidth={1.75} />
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex min-w-0 flex-1 items-center gap-3.5">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-umerco-primary-soft text-umerco-primary">
+                    <CalendarClock className="h-4 w-4" strokeWidth={1.75} />
                   </div>
                   <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
                       <p className="font-mono text-sm font-semibold text-umerco-dark">{schedule.deljit_ref}</p>
                       {outboundBadges.length > 0 ? (
                         <SentDocBadges schedule={schedule} />
                       ) : (
                         <span className={statusPill(schedule.status)}>{statusLabel(schedule.status)}</span>
                       )}
+                      <span className="text-sm text-umerco-muted">
+                        {formatPeriod(schedule.period_start, schedule.period_end)}
+                      </span>
                     </div>
-                    <p className="mt-1 text-sm text-umerco-muted">
-                      {formatPeriod(schedule.period_start, schedule.period_end)}
-                    </p>
                     {isPartnerAdmin ? (
                       <p className="mt-1 text-sm text-umerco-dark">
                         <span className="text-umerco-muted">Sent to </span>
                         <span className="font-medium">{formatSupplierLabel(schedule)}</span>
                       </p>
                     ) : null}
-                    <p className="mt-1 text-xs font-medium text-umerco-primary">
-                      {expanded ? "Hide schedule details" : "View schedule details"}
-                    </p>
                   </div>
                 </div>
-                <ChevronIcon expanded={expanded} />
+                <span className="hidden shrink-0 items-center gap-1.5 text-xs font-medium text-umerco-primary sm:inline-flex">
+                  {expanded ? "Hide details" : "View details"}
+                  <ChevronIcon expanded={expanded} />
+                </span>
+                <span className="sm:hidden">
+                  <ChevronIcon expanded={expanded} />
+                </span>
               </div>
             </button>
 
             <div
-              className="border-t border-umerco-border/70 px-5 py-4"
+              className="border-t border-umerco-border/70 px-5 py-3"
               onClick={(e) => e.stopPropagation()}
             >
               {isPartnerAdmin ? (
@@ -1053,7 +1057,7 @@ export function SchedulesBoard() {
                   !isDocumentTypeAllowed(user, "ORDRSP") &&
                   !isDocumentTypeAllowed(user, "DESADV") &&
                   !isDocumentTypeAllowed(user, "INVOIC") ? (
-                    <p className="text-sm text-umerco-muted sm:col-span-2 xl:col-span-4">
+                    <p className="text-sm text-umerco-muted">
                       No outbound document types are enabled for this supplier.
                     </p>
                   ) : null}
@@ -1543,7 +1547,7 @@ function StatCard({
 }) {
   const toneClass =
     tone === "pending"
-      ? "text-umerco-muted"
+      ? "text-umerco-dark"
       : tone === "acknowledged"
         ? "text-umerco-primary"
         : tone === "asn"
@@ -1552,10 +1556,22 @@ function StatCard({
           ? "text-umerco-success"
           : "text-umerco-dark";
 
+  const barClass =
+    tone === "pending"
+      ? "bg-umerco-muted"
+      : tone === "acknowledged"
+        ? "bg-umerco-primary"
+        : tone === "asn"
+          ? "bg-violet-600"
+        : tone === "completed" || tone === "invoice_sent"
+          ? "bg-umerco-success"
+          : "bg-umerco-dark";
+
   return (
-    <div className="schedule-stat px-4 py-3">
-      <p className="text-xs font-medium uppercase tracking-wide text-umerco-muted">{label}</p>
-      <p className={`mt-1 text-2xl font-semibold tabular-nums ${toneClass}`}>{value}</p>
+    <div className="schedule-stat-cell">
+      <span className={`mb-3 block h-0.5 w-7 rounded-full ${barClass}`} />
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-umerco-muted">{label}</p>
+      <p className={`mt-1.5 text-3xl font-semibold tabular-nums leading-none ${toneClass}`}>{value}</p>
     </div>
   );
 }
@@ -1583,7 +1599,7 @@ function ScheduleActionLink({
       <span
         title={disabledTitle}
         aria-disabled="true"
-        className={`${variantClass} cursor-not-allowed gap-2 px-3 py-2.5 text-xs opacity-50 sm:text-sm`}
+        className={`${variantClass} h-10 w-full cursor-not-allowed gap-2 px-4 text-sm opacity-50`}
       >
         {icon}
         <span className="truncate">{label}</span>
@@ -1592,7 +1608,7 @@ function ScheduleActionLink({
   }
 
   return (
-    <Link className={`${variantClass} gap-2 px-3 py-2.5 text-xs transition-all duration-200 ease-out sm:text-sm`} to={to}>
+    <Link className={`${variantClass} h-10 w-full gap-2 px-4 text-sm transition-all duration-200 ease-out`} to={to}>
       {icon}
       <span className="truncate">{label}</span>
     </Link>

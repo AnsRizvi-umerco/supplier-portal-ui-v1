@@ -147,7 +147,7 @@ export default function CreateSupplierPage() {
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 py-2">
+    <div className="flex w-full min-w-0 flex-col gap-6 py-2">
       <nav className="text-sm text-umerco-muted" aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-2">
           <li>

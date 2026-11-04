@@ -265,7 +265,7 @@ export default function ViewSuppliersPage() {
   const isBulkDelete = (pendingDelete?.length ?? 0) > 1;
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 py-2">
+    <div className="flex w-full min-w-0 flex-col gap-6 py-2">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="umerco-section-label">{t("nav.supplierManagement")}</p>

@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, KeyRound, Lock, Mail, ShieldCheck } from "lucide-react";
+import { LoginSystemsBackdrop } from "@/components/auth/LoginSystemsBackdrop";
 import { LoginField } from "@/components/forms/LoginField";
 import { OtpInput } from "@/components/forms/OtpInput";
 import { LanguageToggle } from "@/components/language-toggle";
@@ -64,8 +65,8 @@ export default function ForgotPasswordPage() {
 
   return (
     <main className="flex min-h-screen flex-col lg:flex-row">
-      <section className="login-brand-panel relative flex flex-col justify-between bg-gray-900 lg:w-[46%] xl:w-[48%]">
-        <div className="login-grid pointer-events-none absolute inset-0 opacity-25" aria-hidden />
+      <section className="login-brand-panel relative flex flex-col justify-between overflow-hidden lg:w-[58%] xl:w-[62%]">
+        <div className="login-grid pointer-events-none absolute inset-0 opacity-20" aria-hidden />
         <div className="pointer-events-none absolute inset-y-0 end-0 w-px bg-white/10" aria-hidden />
 
         <div className="relative z-10 flex flex-1 flex-col justify-center px-8 py-12 lg:px-14 lg:py-16">
@@ -74,40 +75,47 @@ export default function ForgotPasswordPage() {
             alt={t("login.subtitle")}
             className="h-10 w-auto max-w-[220px] object-contain object-left rtl:object-right"
           />
-          <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.18em] text-blue-400">
+          <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.18em] text-blue-300">
             {t("login.title")}
           </p>
 
           <h1 className="login-brand-title mt-8 max-w-md text-3xl font-semibold leading-tight tracking-tight text-white lg:text-4xl">
             {t("forgot.headline")}
           </h1>
-          <p className="login-brand-copy mt-4 max-w-sm text-sm leading-relaxed text-gray-400">
+          <p className="login-brand-copy mt-4 max-w-sm text-sm leading-relaxed text-white/70">
             {t("forgot.description")}
           </p>
 
-          <ul className="mt-10 space-y-0 border-t border-white/10">
-            <li className="flex items-center gap-3.5 border-b border-white/10 py-4 text-sm text-gray-300">
-              <Mail className="h-4 w-4 shrink-0 text-blue-400" strokeWidth={1.75} />
+          <ul className="mt-10 hidden space-y-0 border-t border-white/10 lg:block">
+            <li className="flex items-center gap-3.5 border-b border-white/10 py-3.5 text-sm text-white/80">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-blue-300">
+                <Mail className="h-4 w-4" strokeWidth={1.75} />
+              </span>
               <span>{t("forgot.stepEmailHint")}</span>
             </li>
-            <li className="flex items-center gap-3.5 border-b border-white/10 py-4 text-sm text-gray-300">
-              <ShieldCheck className="h-4 w-4 shrink-0 text-blue-400" strokeWidth={1.75} />
+            <li className="flex items-center gap-3.5 border-b border-white/10 py-3.5 text-sm text-white/80">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-blue-300">
+                <ShieldCheck className="h-4 w-4" strokeWidth={1.75} />
+              </span>
               <span>{t("forgot.stepOtpHint")}</span>
             </li>
-            <li className="flex items-center gap-3.5 border-b border-white/10 py-4 text-sm text-gray-300">
-              <KeyRound className="h-4 w-4 shrink-0 text-blue-400" strokeWidth={1.75} />
+            <li className="flex items-center gap-3.5 border-b border-white/10 py-3.5 text-sm text-white/80">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-blue-300">
+                <KeyRound className="h-4 w-4" strokeWidth={1.75} />
+              </span>
               <span>{t("forgot.stepPasswordHint")}</span>
             </li>
           </ul>
         </div>
 
-        <p className="relative z-10 hidden px-14 pb-8 text-xs text-gray-500 lg:block">
+        <p className="relative z-10 hidden px-14 pb-8 text-xs text-white/45 lg:block">
           © {new Date().getFullYear()} {t("login.subtitle")}. {t("login.rights")}
         </p>
       </section>
 
-      <section className="flex flex-1 flex-col bg-umerco-canvas">
-        <header className="flex items-center justify-between border-b border-umerco-border bg-umerco-surface px-6 py-4 lg:border-none lg:bg-transparent lg:justify-end lg:px-10 lg:pt-6">
+      <section className="login-form-panel relative flex flex-1 flex-col lg:w-[42%] xl:w-[38%]">
+        <LoginSystemsBackdrop />
+        <header className="relative z-20 flex items-center justify-between border-b border-umerco-border/70 bg-white/70 px-6 py-4 backdrop-blur-sm lg:border-none lg:bg-transparent lg:justify-end lg:px-8 lg:pt-6">
           <img
             src={LOGO_DARK_SRC}
             alt={t("login.subtitle")}
@@ -116,7 +124,7 @@ export default function ForgotPasswordPage() {
           <LanguageToggle />
         </header>
 
-        <div className="flex flex-1 items-center justify-center px-6 pb-10 lg:px-10">
+        <div className="relative z-10 flex flex-1 items-center justify-center px-6 pb-10 lg:px-8">
           <div className="w-full max-w-[440px]">
             <div className="mb-8">
               <h2 className="text-2xl font-semibold tracking-tight text-umerco-dark">{stepTitle}</h2>
